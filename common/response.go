@@ -51,3 +51,12 @@ func InternalServerError(c *gin.Context, message string) {
 
 	ErrorResponseWithCode(c, http.StatusInternalServerError, errorData)
 }
+
+func BadRequest(c *gin.Context, errorData interface{}) {
+	c.JSON(http.StatusBadRequest, Response{
+		Status:    http.StatusBadRequest,
+		Data:      nil,
+		Error:     errorData,
+		RequestId: c.Request.Header.Get("X-B3-Traceid"),
+	})
+}
